@@ -10,6 +10,7 @@ public class RaySharp : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Map _map;
+    private Player _player;
 
     public RaySharp()
     {
@@ -27,6 +28,7 @@ public class RaySharp : Game
     protected override void Initialize()
     {
         _map = new Map();
+        _player = new Player();
         base.Initialize();
     }
 
@@ -42,6 +44,8 @@ public class RaySharp : Game
         {
             Exit();
         }
+
+        _player.Update(gameTime);
         
         base.Update(gameTime);
     }
@@ -57,6 +61,8 @@ public class RaySharp : Game
         _spriteBatch.Begin();
 
         _map.Draw(_spriteBatch);
+
+        _player.Draw(_spriteBatch);
 
         _spriteBatch.End();
 
