@@ -30,7 +30,7 @@ public class Map
             {
                 if (World[y, x] == 1)
                 {      
-                    spriteBatch.DrawRectangle(new Rectangle(x * 100, y * 100, 100, 100), Color.WhiteSmoke);
+                    spriteBatch.DrawRectangle(new Rectangle(x * 100, y * 100, 100, 100), Color.DarkGray);
                 }
             }
         }

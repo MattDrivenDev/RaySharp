@@ -73,12 +73,20 @@ public class Player
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        var x = _x * 100 - Settings.PlayerScale / 2;
-        var y = _y * 100 - Settings.PlayerScale / 2;
+        var x = (_x * 100);
+        var y = (_y * 100);
         spriteBatch.DrawRectangle(
             new Rectangle(
-                (Int32)x, (Int32)y, 
-                Settings.PlayerScale, Settings.PlayerScale), 
+                (Int32)x - Settings.PlayerScale / 2, 
+                (Int32)y - Settings.PlayerScale / 2, 
+                Settings.PlayerScale, 
+                Settings.PlayerScale), 
             Color.Yellow);
+
+        var start = new Vector2((Int32)x, (Int32)y);
+        var end = new Vector2(
+            (Int32)(x + Settings.Width * Math.Cos(_rotation)), 
+            (Int32)(y + Settings.Height * Math.Sin(_rotation)));
+        spriteBatch.DrawLine(start, end, Color.Yellow, 1f);
     }
 }
