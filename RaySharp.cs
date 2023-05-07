@@ -11,6 +11,7 @@ public class RaySharp : Game
     private SpriteBatch _spriteBatch;
     private Map _map;
     private Player _player;
+    private RayCasting _rayCasting;
 
     public RaySharp()
     {
@@ -29,6 +30,7 @@ public class RaySharp : Game
     {
         _map = new Map();
         _player = new Player(_map);
+        _rayCasting = new RayCasting(_map, _player);
         base.Initialize();
     }
 
@@ -46,6 +48,7 @@ public class RaySharp : Game
         }
 
         _player.Update(gameTime);
+        _rayCasting.Update(gameTime);
         
         base.Update(gameTime);
     }
@@ -63,6 +66,7 @@ public class RaySharp : Game
         _map.Draw(_spriteBatch);
 
         _player.Draw(_spriteBatch);
+        _rayCasting.Draw(_spriteBatch);
 
         _spriteBatch.End();
 

@@ -21,6 +21,7 @@ public class Player
     public Single Y => _y;
     public Int32 MapX => (Int32)X;
     public Int32 MapY => (Int32)Y;
+    public Double Rotation => _rotation;
 
     private void Move(GameTime gameTime, KeyboardState ks)
     {
@@ -102,10 +103,13 @@ public class Player
                 Settings.PlayerScale), 
             Color.Yellow);
 
-        var start = new Vector2((Int32)x, (Int32)y);
-        var end = new Vector2(
-            (Int32)(x + Settings.Width * Math.Cos(_rotation)), 
-            (Int32)(y + Settings.Height * Math.Sin(_rotation)));
-        spriteBatch.DrawLine(start, end, Color.Yellow, 1f);
+        if (Settings.DrawPlayerDirection)
+        {
+            var start = new Vector2((Int32)x, (Int32)y);
+            var end = new Vector2(
+                (Int32)(x + Settings.Width * Math.Cos(_rotation)), 
+                (Int32)(y + Settings.Height * Math.Sin(_rotation)));
+            spriteBatch.DrawLine(start, end, Color.Yellow, 1f);
+        }
     }
 }
