@@ -6,16 +6,18 @@ namespace RaySharp;
 
 public struct Ray
 {
-    public Ray(Double sin, Double cos, Double depth)
+    public Ray(Double sin, Double cos, Double depth, Double rotation)
     {
         Sin = sin;
         Cos = cos;
         Depth = depth;
+        Rotation = rotation;
     }
 
     public Double Sin { get; init; }
     public Double Cos { get; init; }
     public Double Depth { get; init; }
+    public Double Rotation { get; init; }
 }
 
 public class RayCasting
@@ -91,7 +93,11 @@ public class RayCasting
             }
             
             depth = vertDepth < horzDepth ? vertDepth : horzDepth;
-            _rays[i] = new Ray(sin, cos, depth);
+
+            // Fix fish eye effect
+            depth *= Math.Cos(_player.Rotation - rayAngle);
+
+            _rays[i] = new Ray(sin, cos, depth, rayAngle);
 
             rayAngle += Settings.DeltaFOV;
         }
