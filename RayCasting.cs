@@ -91,7 +91,6 @@ public class RayCasting
             }
             
             depth = vertDepth < horzDepth ? vertDepth : horzDepth;
-
             _rays[i] = new Ray(sin, cos, depth);
 
             rayAngle += Settings.DeltaFOV;
@@ -111,13 +110,16 @@ public class RayCasting
         for (var i = 0; i < Settings.RayCount; i++)
         {
             var ray = _rays[i];
-            spriteBatch.DrawLine(
-                new Vector2(originX * 100, originY * 100), 
-                new Vector2(
-                    (Single)(originX * 100 + ray.Depth * 100 * ray.Cos), 
-                    (Single)(originY * 100 + ray.Depth * 100 * ray.Sin)),
-                Color.Yellow,
-                1f);
+            var projectionHeight = Settings.ScreenDistance / (ray.Depth + 0.0001f);
+            var color = Color.White * (Single)(1 - ray.Depth / Settings.MaxDepth);
+            
+            spriteBatch.DrawRectangle(
+                new Rectangle(
+                    i * (Int32)Settings.TileScale, 
+                    (Int32)(Settings.HalfHeight / 2 - projectionHeight / 2), 
+                    (Int32)Settings.TileScale, 
+                    (Int32)projectionHeight), 
+                color);
         }
     }
 }
