@@ -112,11 +112,11 @@ public class RayCasting
             var ray = _rays[i];
             var projectionHeight = Settings.ScreenDistance / (ray.Depth + 0.0001f);
             var color = Color.White * (Single)(1 - ray.Depth / Settings.MaxDepth);
-            
+
             spriteBatch.DrawRectangle(
                 new Rectangle(
                     i * (Int32)Settings.TileScale, 
-                    (Int32)(Settings.HalfHeight / 2 - projectionHeight / 2), 
+                    (Int32)(Settings.HalfHeight - projectionHeight / 2), 
                     (Int32)Settings.TileScale, 
                     (Int32)projectionHeight), 
                 color);
