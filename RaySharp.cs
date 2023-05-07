@@ -28,7 +28,7 @@ public class RaySharp : Game
     protected override void Initialize()
     {
         _map = new Map();
-        _player = new Player();
+        _player = new Player(_map);
         base.Initialize();
     }
 

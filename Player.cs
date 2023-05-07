@@ -7,6 +7,12 @@ namespace RaySharp;
 
 public class Player
 {
+    public Player(Map map)
+    {
+        _map = map;
+    }
+
+    private readonly Map _map;
     private Single _x = Settings.PlayerStartingX;
     private Single _y = Settings.PlayerStartingY;
     private Double _rotation = Settings.PlayerStartingAngle;
@@ -50,8 +56,7 @@ public class Player
             dy += (Single)cos;
         }
 
-        _x += dx;
-        _y += dy;
+        CheckWallCollision(dx, dy);
 
         if (ks.IsKeyDown(Keys.Left))
         {
@@ -64,6 +69,20 @@ public class Player
         }
 
         _rotation %= Math.Tau;
+    }
+
+    private Boolean CheckWall(Int32 x, Int32 y) => _map.World[y, x] == 1;
+
+    private void CheckWallCollision(Single dx, Single dy)
+    {
+        var x = (Int32)(_x + dx);
+        var y = (Int32)(_y + dy);
+
+        if (!CheckWall(x, y))
+        {
+            _x += dx;
+            _y += dy;
+        }
     }
 
     public void Update(GameTime gameTime)
