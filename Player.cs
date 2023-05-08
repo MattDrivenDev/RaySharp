@@ -13,9 +13,9 @@ public class Player
     }
 
     private readonly Map _map;
-    private Single _x = Settings.PlayerStartingX;
-    private Single _y = Settings.PlayerStartingY;
-    private Double _rotation = Settings.PlayerStartingAngle;
+    private Single _x = Settings.PLAYER_STARTING_X;
+    private Single _y = Settings.PLAYER_STARTING_Y;
+    private Double _rotation = Settings.PLAYER_STARTING_ROTATION;
 
     public Single X => _x;
     public Single Y => _y;
@@ -29,7 +29,7 @@ public class Player
         var cos = Math.Cos(_rotation);
         var dx = 0f;
         var dy = 0f;
-        var speed = Settings.PlayerSpeed * gameTime.ElapsedGameTime.TotalSeconds;
+        var speed = Settings.PLAYER_SPEED * gameTime.ElapsedGameTime.TotalSeconds;
         sin = speed * sin;
         cos = speed * cos;
 
@@ -61,12 +61,12 @@ public class Player
 
         if (ks.IsKeyDown(Keys.Left))
         {
-            _rotation -= Settings.PlayerRotationSpeed;
+            _rotation -= Settings.PLAYER_ROTATION_SPEED;
         }
 
         if (ks.IsKeyDown(Keys.Right))
         {
-            _rotation += Settings.PlayerRotationSpeed;
+            _rotation += Settings.PLAYER_ROTATION_SPEED;
         }
 
         _rotation %= Math.Tau;
@@ -99,16 +99,16 @@ public class Player
             var y = (_y * 100);
             spriteBatch.DrawRectangle(
                 new Rectangle(
-                    (Int32)x - Settings.PlayerScale / 2, 
-                    (Int32)y - Settings.PlayerScale / 2, 
-                    Settings.PlayerScale, 
-                    Settings.PlayerScale), 
+                    (Int32)x - Settings.PLAYER_SCALE / 2, 
+                    (Int32)y - Settings.PLAYER_SCALE / 2, 
+                    Settings.PLAYER_SCALE, 
+                    Settings.PLAYER_SCALE), 
                 Color.Yellow);
 
             var start = new Vector2((Int32)x, (Int32)y);
             var end = new Vector2(
-                (Int32)(x + Settings.Width * Math.Cos(_rotation)), 
-                (Int32)(y + Settings.Height * Math.Sin(_rotation)));
+                (Int32)(x + Settings.WIDTH * Math.Cos(_rotation)), 
+                (Int32)(y + Settings.HEIGHT * Math.Sin(_rotation)));
             spriteBatch.DrawLine(start, end, Color.Yellow, 1f);
         }
     }

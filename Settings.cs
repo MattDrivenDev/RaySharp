@@ -7,24 +7,26 @@ namespace RaySharp;
 /// </summary>
 public class Settings
 {
-    public static Int32 Width = 1600;
-    public static Int32 HalfWidth = Width / 2;
-    public static Int32 Height = 900;
-    public static Int32 HalfHeight = Height / 2;
-    public static Int32 TargetFPS = 60;
-    public static Single PlayerStartingX = 1.5f;
-    public static Single PlayerStartingY = 1.5f;
-    public static Single PlayerStartingAngle = 0;
-    public static Single PlayerSpeed = 2.5f;
-    public static Single PlayerRotationSpeed = 0.1f;
-    public static Int32 PlayerScale = 10;
-    public static Single PlayerFOV = MathF.PI / 3;
-    public static Single PlayerFOVOver2 = PlayerFOV / 2;
-    public static Int32 RayCount = Width / 2;
-    public static Int32 RayCountOver2 = RayCount / 2;
-    public static Single DeltaFOV = PlayerFOV / RayCount;
-    public static Int32 MaxDepth = 20;
+    public static Int32 WIDTH = 1600;
+    public static Int32 HALF_WIDTH = WIDTH / 2;
+    public static Int32 HEIGHT = 900;
+    public static Int32 HALF_HEIGHT = HEIGHT / 2;
+    public static Int32 TARGET_FPS = 60;
+    public static Single PLAYER_STARTING_X = 1.5f;
+    public static Single PLAYER_STARTING_Y = 1.5f;
+    public static Single PLAYER_STARTING_ROTATION = 0;
+    public static Single PLAYER_SPEED = 2.5f;
+    public static Single PLAYER_ROTATION_SPEED = 0.1f;
+    public static Int32 PLAYER_SCALE = 10;
+    public static Single FOV = MathF.PI / 3;
+    public static Single HALF_FOV = FOV / 2;
+    public static Int32 RAY_COUNT = WIDTH / 2;
+    public static Int32 HALF_RAY_COUNT = RAY_COUNT / 2;
+    public static Single DELTA_ANGLE = FOV / RAY_COUNT;
+    public static Int32 MAX_DEPTH = 20;
     public static Boolean DrawPlayerDirection = false;
-    public static Single ScreenDistance = HalfWidth / MathF.Tan(PlayerFOVOver2);
-    public static Single TileScale = Width / RayCount;
+    public static Single SCREEN_DISTANCE = HALF_WIDTH / MathF.Tan(HALF_FOV);
+    public static Int32 SCALE = WIDTH / RAY_COUNT;
+    public static Int32 TEXTURE_SIZE = 256;
+    public static Int32 HALF_TEXTURE_SIZE = TEXTURE_SIZE / 2;
 }

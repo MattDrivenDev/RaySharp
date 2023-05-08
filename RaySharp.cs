@@ -12,17 +12,18 @@ public class RaySharp : Game
     private Map _map;
     private Player _player;
     private RayCasting _rayCasting;
+    private ObjectRenderer _objectRenderer;
 
     public RaySharp()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        _graphics.PreferredBackBufferWidth = Settings.Width;
-        _graphics.PreferredBackBufferHeight = Settings.Height;
-        _graphics.IsFullScreen = true;
+        _graphics.PreferredBackBufferWidth = Settings.WIDTH;
+        _graphics.PreferredBackBufferHeight = Settings.HEIGHT;
+        _graphics.IsFullScreen = false;
         IsFixedTimeStep = true;
-        TargetElapsedTime = TimeSpan.FromSeconds(1d / Settings.TargetFPS);
+        TargetElapsedTime = TimeSpan.FromSeconds(1d / Settings.TARGET_FPS);
         _graphics.ApplyChanges();
     }
 
@@ -30,7 +31,8 @@ public class RaySharp : Game
     {
         _map = new Map();
         _player = new Player(_map);
-        _rayCasting = new RayCasting(_map, _player);
+        _objectRenderer = new ObjectRenderer(Content);
+        _rayCasting = new RayCasting(_map, _player, _objectRenderer);
         base.Initialize();
     }
 
@@ -66,7 +68,10 @@ public class RaySharp : Game
         _map.Draw(_spriteBatch);
 
         _player.Draw(_spriteBatch);
+
         _rayCasting.Draw(_spriteBatch);
+
+        _objectRenderer.Draw(_spriteBatch, gameTime);
 
         _spriteBatch.End();
 
