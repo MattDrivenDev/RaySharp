@@ -18,7 +18,7 @@ public class RaySharp : Game
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
-        IsMouseVisible = true;
+        IsMouseVisible = false;
         _graphics.PreferredBackBufferWidth = Settings.WIDTH;
         _graphics.PreferredBackBufferHeight = Settings.HEIGHT;
         _graphics.IsFullScreen = false;

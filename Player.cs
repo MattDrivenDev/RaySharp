@@ -23,7 +23,7 @@ public class Player
     public Int32 MapY => (Int32)Y;
     public Double Rotation => _rotation;
 
-    private void Move(GameTime gameTime, KeyboardState ks)
+    private void Move(GameTime gameTime, KeyboardState ks, MouseState ms)
     {
         var sin = Math.Sin(_rotation);
         var cos = Math.Cos(_rotation);
@@ -58,18 +58,30 @@ public class Player
         }
 
         CheckWallCollision(dx, dy);
+        MouseRotation(ms, gameTime);
+    }
 
-        if (ks.IsKeyDown(Keys.Left))
+    private void MouseRotation(MouseState ms, GameTime gameTime)
+    {
+        var x = ms.X;
+        if (x < Settings.MOUSE_BORDER_LEFT || X > Settings.MOUSE_BORDER_RIGHT)
         {
-            _rotation -= Settings.PLAYER_ROTATION_SPEED;
+            Mouse.SetPosition(Settings.HALF_WIDTH, Settings.HALF_HEIGHT);
         }
 
-        if (ks.IsKeyDown(Keys.Right))
-        {
-            _rotation += Settings.PLAYER_ROTATION_SPEED;
-        }
+        // Don't forget to flip the input because as the x lowers (i.e. moves closer
+        // to the x=0) the rotation should increase (i.e. rotate counter-clockwise)
+        var mouseDelta = -(Settings.HALF_WIDTH - x);
 
-        _rotation %= Math.Tau;
+        // Ensure that the delta is within the bounds of the maximum per update.
+        mouseDelta = Math.Max(-Settings.MOUSE_MAX_RELATIVE_X, Math.Min(Settings.MOUSE_MAX_RELATIVE_X, mouseDelta));
+        
+        // Get the delta and apply to the player's rotation.
+        var rotationDelta = mouseDelta * Settings.MOUSE_SENSITIVITY * gameTime.ElapsedGameTime.TotalSeconds;
+        _rotation += rotationDelta;
+        
+        // Set the mouse position back to the center of the screen ready for another update.
+        Mouse.SetPosition(Settings.HALF_WIDTH, Settings.HALF_HEIGHT);
     }
 
     private Boolean CheckWall(Int32 x, Int32 y) => _map.World[y, x] >= 1;
@@ -88,7 +100,7 @@ public class Player
 
     public void Update(GameTime gameTime)
     {
-        Move(gameTime, Keyboard.GetState());
+        Move(gameTime, Keyboard.GetState(), Mouse.GetState());
     }
 
     public void Draw(SpriteBatch spriteBatch)

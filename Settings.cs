@@ -29,4 +29,8 @@ public class Settings
     public static Int32 SCALE = WIDTH / RAY_COUNT;
     public static Int32 TEXTURE_SIZE = 256;
     public static Int32 HALF_TEXTURE_SIZE = TEXTURE_SIZE / 2;
+    public static Single MOUSE_SENSITIVITY = 0.3f;
+    public static Int32 MOUSE_MAX_RELATIVE_X = 40;
+    public static Int32 MOUSE_BORDER_LEFT = 100;
+    public static Int32 MOUSE_BORDER_RIGHT = WIDTH - MOUSE_BORDER_LEFT;
 }
