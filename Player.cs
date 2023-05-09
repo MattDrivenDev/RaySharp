@@ -7,11 +7,13 @@ namespace RaySharp;
 
 public class Player
 {
-    public Player(Map map)
+    public Player(Map map, ObjectRenderer objectRenderer)
     {
         _map = map;
+        _objectRenderer = objectRenderer;
     }
 
+    private readonly ObjectRenderer _objectRenderer;
     private readonly Map _map;
     private Single _x = Settings.PLAYER_STARTING_X;
     private Single _y = Settings.PLAYER_STARTING_Y;
@@ -79,6 +81,9 @@ public class Player
         // Get the delta and apply to the player's rotation.
         var rotationDelta = mouseDelta * Settings.MOUSE_SENSITIVITY * gameTime.ElapsedGameTime.TotalSeconds;
         _rotation += rotationDelta;
+
+        // Punch the rotation into the renderer for backgrounds
+        _objectRenderer.SetPlayerRelativeMovement((Int32)rotationDelta);
         
         // Set the mouse position back to the center of the screen ready for another update.
         Mouse.SetPosition(Settings.HALF_WIDTH, Settings.HALF_HEIGHT);

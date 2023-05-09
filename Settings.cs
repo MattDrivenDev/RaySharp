@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 
 namespace RaySharp;
 
@@ -33,4 +34,5 @@ public class Settings
     public static Int32 MOUSE_MAX_RELATIVE_X = 40;
     public static Int32 MOUSE_BORDER_LEFT = 100;
     public static Int32 MOUSE_BORDER_RIGHT = WIDTH - MOUSE_BORDER_LEFT;
+    public static Color FLOOR_COLOR = new Color(30, 30, 30);
 }

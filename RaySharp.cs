@@ -30,8 +30,8 @@ public class RaySharp : Game
     protected override void Initialize()
     {
         _map = new Map();
-        _player = new Player(_map);
         _objectRenderer = new ObjectRenderer(Content);
+        _player = new Player(_map, _objectRenderer);
         _rayCasting = new RayCasting(_map, _player, _objectRenderer);
         base.Initialize();
     }
@@ -61,7 +61,7 @@ public class RaySharp : Game
         
         Window.Title = $"RaySharp - FPS: {fps:0.00}";
         
-        GraphicsDevice.Clear(Color.Black);
+        //GraphicsDevice.Clear(Color.Black);
 
         _spriteBatch.Begin();
 
