@@ -105,7 +105,7 @@ public class RayCasting
                     var horzTileX = Math.Clamp((Int32)horzX, 0, _map.World.GetLength(1) - 1);
                     var horzTileY = Math.Clamp((Int32)horzY, 0, _map.World.GetLength(0) - 1);
 
-                    if (_map.World[horzTileY, horzTileX] == 1) // Hit a wall
+                    if (_map.World[horzTileY, horzTileX] >= 1) // Hit a wall
                     {
                         horzTexture = _map.World[horzTileY, horzTileX];
                         break;
@@ -129,7 +129,7 @@ public class RayCasting
                     
                     var vertTileX = Math.Clamp((Int32)vertX, 0, _map.World.GetLength(1) - 1);
                     var vertTileY = Math.Clamp((Int32)vertY, 0, _map.World.GetLength(0) - 1);
-                    if (_map.World[vertTileY, vertTileX] == 1) // Hit a wall
+                    if (_map.World[vertTileY, vertTileX] >= 1) // Hit a wall
                     {
                         vertTexture = _map.World[vertTileY, vertTileX];
                         break;

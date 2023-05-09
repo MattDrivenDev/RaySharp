@@ -72,12 +72,12 @@ public class Player
         _rotation %= Math.Tau;
     }
 
-    private Boolean CheckWall(Int32 x, Int32 y) => _map.World[y, x] == 1;
+    private Boolean CheckWall(Int32 x, Int32 y) => _map.World[y, x] >= 1;
 
     private void CheckWallCollision(Single dx, Single dy)
     {
-        var x = (Int32)(_x + dx);
-        var y = (Int32)(_y + dy);
+        var x = (Int32)(_x + dx * Settings.PLAYER_SCALE);
+        var y = (Int32)(_y + dy * Settings.PLAYER_SCALE);
 
         if (!CheckWall(x, y))
         {
