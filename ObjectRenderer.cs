@@ -84,35 +84,47 @@ public class ObjectRenderer
     private void RenderWalls(SpriteBatch spriteBatch)
     {
         // Oh my days! This took me a while to figure out.
-        var backToFront = _renderableObjects.OrderBy(x => x.Depth).Reverse();
+        var backToFront = _renderableObjects.OrderByDescending(x => x.Depth);
 
         foreach (var renderableObject in backToFront)
         {
-            var texture = _wallTextures[renderableObject.TextureIndex];
-            var rgb = 1 / (1 + MathF.Pow(renderableObject.Depth, 5) * 0.00002f);
-            var color = new Color(rgb, rgb, rgb);
-
-            spriteBatch.Draw(
-                texture,
-                renderableObject.Destination,
-                renderableObject.Source,
-                color);
+            if (renderableObject.Texture != null)
+            {
+                DrawObject(spriteBatch, renderableObject);
+            }
+            else
+            {
+                DrawWall(spriteBatch, renderableObject);
+            }
         }
     }
-}
 
-public struct RenderableObject
-{
-    public RenderableObject(Single depth, Rectangle source, Rectangle destination, Int32 textureIndex)
+    private void DrawObject(SpriteBatch spriteBatch, RenderableObject renderable)
     {
-        Depth = depth;
-        Source = source;
-        Destination = destination;
-        TextureIndex = textureIndex;
+        var rgb = 1 / (1 + MathF.Pow(renderable.Depth, 5) * 0.00002f);
+        var color = new Color(rgb, rgb, rgb);
+
+        spriteBatch.Draw(
+            renderable.Texture,
+            renderable.Destination,
+            null,
+            color);
+
+        // Console.WriteLine(renderable.Destination);
+        // spriteBatch.DrawRectangle(
+        //     renderable.Destination,
+        //     Color.White);
     }
 
-    public Single Depth { get; init; }
-    public Rectangle Source { get; init; }
-    public Rectangle Destination { get; init; }
-    public Int32 TextureIndex { get; init; }
+    private void DrawWall(SpriteBatch spriteBatch, RenderableObject renderable)
+    {        
+        var rgb = 1 / (1 + MathF.Pow(renderable.Depth, 5) * 0.00002f);
+        var color = new Color(rgb, rgb, rgb);
+
+        spriteBatch.Draw(
+            _wallTextures[renderable.TextureIndex],
+            renderable.Destination,
+            renderable.Source,
+            color);
+    }
 }

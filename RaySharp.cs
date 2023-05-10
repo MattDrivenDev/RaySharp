@@ -13,6 +13,7 @@ public class RaySharp : Game
     private Player _player;
     private RayCasting _rayCasting;
     private ObjectRenderer _objectRenderer;
+    private SpriteObject[] _spriteObjects = new SpriteObject[3];
 
     public RaySharp()
     {
@@ -29,10 +30,17 @@ public class RaySharp : Game
 
     protected override void Initialize()
     {
+        var spriteTexture = Content.Load<Texture2D>("sprites/static_sprites/candlebra");
+
         _map = new Map();
         _objectRenderer = new ObjectRenderer(Content);
         _player = new Player(_map, _objectRenderer);
         _rayCasting = new RayCasting(_map, _player, _objectRenderer);
+        
+        _spriteObjects[0] = new SpriteObject(spriteTexture, 5, Settings.PLAYER_STARTING_Y + 0.0f, _player, _objectRenderer);
+        _spriteObjects[1] = new SpriteObject(spriteTexture, 6.5f, Settings.PLAYER_STARTING_Y + 1.5f, _player, _objectRenderer);
+        _spriteObjects[2] = new SpriteObject(spriteTexture, 8, Settings.PLAYER_STARTING_Y + 3.0f, _player, _objectRenderer);
+        
         base.Initialize();
     }
 
@@ -51,6 +59,11 @@ public class RaySharp : Game
 
         _player.Update(gameTime);
         _rayCasting.Update(gameTime);
+        
+        foreach (var spriteObject in _spriteObjects)
+        {
+            spriteObject.Update(gameTime);
+        }
         
         base.Update(gameTime);
     }
