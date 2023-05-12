@@ -9,19 +9,28 @@ public class SpriteObject
     public SpriteObject(
         Texture2D texture,
         Single x, Single y,
+        Int32 width, Int32 height,
         Player player,
-        ObjectRenderer objectRenderer)
+        ObjectRenderer objectRenderer,
+        Single scale,
+        Single shift)
     {
         _texture = texture;
         _objectRenderer = objectRenderer;
         _player = player;
         _x = x;
         _y = y;
+        _shiftHeight = shift;
+        _scale = scale;
+        _width = width;
+        _height = height;
+        
+        SetSource(new Rectangle(0, 0, width, height));
     }
 
-    private Int32 _width => _texture.Width;
+    private Int32 _width;
     private Int32 _halfWidth => _width / 2;
-    private Int32 _height => _texture.Height;
+    private Int32 _height;
     private Single _ratio => (Single)_width / (Single)_height;
     private Single _x;
     private Single _y;
@@ -29,12 +38,14 @@ public class SpriteObject
     private Int32 _screenY;
     private readonly ObjectRenderer _objectRenderer;
     private readonly Texture2D _texture;
+    private Rectangle _source;
     private readonly Player _player;
     private Single _distance;
     private Single _normalizedDistance;
-    private Single _shiftHeight => 0.27f;
+    private Single _shiftHeight;
+    private Single _scale;
 
-    public void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime)
     {
         GetSprite();
     }
@@ -76,9 +87,14 @@ public class SpriteObject
         }
     }
 
+    protected void SetSource(Rectangle source)
+    {
+        _source = source;
+    }
+
     private void GetSpriteProjection()
     {
-        var projection = Settings.SCREEN_DISTANCE / _normalizedDistance * 0.7f; // half scale
+        var projection = Settings.SCREEN_DISTANCE / _normalizedDistance * _scale;
         var projectionWidth = projection * _ratio;
         var projectionHeight = projection;
         var halfSpriteWidth = projectionWidth / 2;
@@ -86,10 +102,12 @@ public class SpriteObject
         var px = _screenX - halfSpriteWidth;
         var py = (Settings.HALF_HEIGHT) - (projectionHeight / 2) + heightShift;
         
+        var destination = new Rectangle((Int32)px, (Int32)py, (Int32)projectionWidth, (Int32)projectionHeight);
         var renderable = new RenderableObject(
             _normalizedDistance,
-            _texture,
-            new Rectangle((Int32)px, (Int32)py, (Int32)projectionWidth, (Int32)projectionHeight));
+            _source,
+            destination,
+            _texture);
 
         _objectRenderer.AddObjectToRender(renderable);
     }

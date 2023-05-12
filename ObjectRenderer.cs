@@ -107,7 +107,7 @@ public class ObjectRenderer
         spriteBatch.Draw(
             renderable.Texture,
             renderable.Destination,
-            null,
+            renderable.Source,
             color);
 
         // Console.WriteLine(renderable.Destination);

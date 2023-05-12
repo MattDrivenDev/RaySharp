@@ -15,17 +15,17 @@ public struct RenderableObject
         Texture = null;
     }
 
-    public RenderableObject(Single depth, Texture2D texture, Rectangle destination)
+    public RenderableObject(Single depth, Rectangle source, Rectangle destination, Texture2D texture)
     {
         Depth = depth;
         Texture = texture;
-        Source = null;
+        Source = source;
         Destination = destination;
         TextureIndex = 0;
     }
 
     public Single Depth { get; init; }
-    public Rectangle? Source { get; init; }
+    public Rectangle Source { get; init; }
     public Rectangle Destination { get; init; }
     public Int32 TextureIndex { get; init; }
     public Texture2D Texture { get; init; }
