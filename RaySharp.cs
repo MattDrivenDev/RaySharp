@@ -13,7 +13,7 @@ public class RaySharp : Game
     private Player _player;
     private RayCasting _rayCasting;
     private ObjectRenderer _objectRenderer;
-    private SpriteObject[] _spriteObjects = new SpriteObject[4];
+    private ObjectHandler _objectHandler;
 
     public RaySharp()
     {
@@ -30,47 +30,11 @@ public class RaySharp : Game
 
     protected override void Initialize()
     {
-        var spriteTexture = Content.Load<Texture2D>("sprites/static_sprites/candlebra");
-        var animatedSpriteTexture = Content.Load<Texture2D>("sprites/animated_sprites/green_light/all");
-
         _map = new Map();
         _objectRenderer = new ObjectRenderer(Content);
         _player = new Player(_map, _objectRenderer);
         _rayCasting = new RayCasting(_map, _player, _objectRenderer);
-        
-        _spriteObjects[0] = new SpriteObject(
-            spriteTexture, 
-            5, Settings.PLAYER_STARTING_Y + 0.0f, 
-            spriteTexture.Width, spriteTexture.Height,
-            _player, 
-            _objectRenderer, 
-            0.7f, 0.27f);
-
-        _spriteObjects[1] = new SpriteObject(
-            spriteTexture, 
-            6.5f, Settings.PLAYER_STARTING_Y + 1.5f, 
-            spriteTexture.Width, spriteTexture.Height,
-            _player, 
-            _objectRenderer, 
-            0.7f, 0.27f);
-
-        _spriteObjects[2] = new SpriteObject(
-            spriteTexture, 
-            8, Settings.PLAYER_STARTING_Y + 3.0f, 
-            spriteTexture.Width, spriteTexture.Height,
-            _player, 
-            _objectRenderer, 
-            0.7f, 0.27f);
-        
-        
-        _spriteObjects[3] = new AnimatedSpriteObject(
-            animatedSpriteTexture, 
-            10, Settings.PLAYER_STARTING_Y + 4.5f, 
-            animatedSpriteTexture.Width / 4, animatedSpriteTexture.Height,
-            _player, 
-            _objectRenderer, 
-            0.7f, 0.27f, 
-            0.120f);
+        _objectHandler = new ObjectHandler(Content, _player, _objectRenderer);
         
         base.Initialize();
     }
@@ -90,12 +54,8 @@ public class RaySharp : Game
 
         _player.Update(gameTime);
         _rayCasting.Update(gameTime);
-        
-        foreach (var spriteObject in _spriteObjects)
-        {
-            spriteObject.Update(gameTime);
-        }
-        
+        _objectHandler.Update(gameTime);  
+              
         base.Update(gameTime);
     }
 
